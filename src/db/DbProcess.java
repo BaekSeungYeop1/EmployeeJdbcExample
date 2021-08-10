@@ -37,7 +37,7 @@ public class DbProcess {
             case Menu.UPDATE:
                 //직원 정보 수정
                 System.out.println("직원 정보의 수정");
-                //콘솔 출력 : (emp_no이 10001~10020)직원 목록을 조회해서 사용자에게 보여줌
+                //콘솔 출력 : (사용자에게 "1"을 입력받을 시 Employee 테이블에서 emp_no 10001~10020인 직원을 조회
                 List<Employee> employees = showALLstudents(conn, pstmt, rs);
                 //콘솔 출력 : 수정할 직원의 번호(emp_no)을 입력하세요
                 System.out.println("수정할 직원의 번호를 입력하세요");
