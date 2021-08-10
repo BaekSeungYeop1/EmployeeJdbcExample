@@ -1,5 +1,6 @@
 package db;
 
+import Input.InputUtil;
 import core.Menu;
 
 import java.sql.*;
@@ -28,11 +29,32 @@ public class DbProcess {
         // selectedNumber에 따라 쿼리를 다르게 한다.
         switch (this.selectNumber) {
             case Menu.SELECT:
+                //직원 정보 조회(emp_no가 10001~10020)
                 showALLstudents(conn, pstmt, rs);
                 break;
             case Menu.INSERT:
                 break;
             case Menu.UPDATE:
+                //직원 정보 수정
+                System.out.println("직원 정보의 수정");
+                //콘솔 출력 : (emp_no이 10001~10020)직원 목록을 조회해서 사용자에게 보여줌
+                List<Employee> employees = showALLstudents(conn, pstmt, rs);
+                //콘솔 출력 : 수정할 직원의 번호(emp_no)을 입력하세요
+                System.out.println("수정할 직원의 번호를 입력하세요");
+                int sIDToUpdate = InputUtil.getIdFromEmployeeList(employees);
+                System.out.println("수정할 학생 번호 : " + sIDToUpdate );
+                // 출생년도,이름,성,성별,입사년도를 입력받는다
+                Employee updateStd = Employee.buildStudent();
+                // 업데이트 쿼리 수행
+                pstmt = conn.prepareStatement("UPDATE Employees SET birth_date=?,first_name=?,last_name=?,gender=?,hire_date=? where emp_no=?");
+                pstmt.setString(1, updateStd.getBirth_date());
+                pstmt.setString(2, updateStd.getFirst_name());
+                pstmt.setString(3, updateStd.getLast_name());
+                pstmt.setString(4, updateStd.getGender());
+                pstmt.setString(5, updateStd.getHire_data());
+                pstmt.setInt(6,sIDToUpdate);
+                pstmt.executeUpdate();
+                System.out.println("업데이트 완료.");
                 break;
             case Menu.DELETE:
                 break;
