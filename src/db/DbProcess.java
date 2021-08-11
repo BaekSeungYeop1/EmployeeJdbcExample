@@ -80,6 +80,18 @@ public class DbProcess {
                 System.out.println("업데이트 완료.");
                 break;
             case Menu.DELETE:
+                // 콘솔 출력 : 학생 정보의 삭제
+                System.out.println("학생 정보의 삭제");
+                // 전체 학생의 목록 출력
+                List<Employee> EmployeeList = showALLstudents(conn, pstmt, rs);
+                // 콘솔 출력
+                System.out.println("삭제할 학생의 번호를 입력 하세요");
+                int sIdToDelete = InputUtil.getIdFromEmployeeList(EmployeeList);
+                // 삭제 쿼리 수행
+                pstmt = conn.prepareStatement("DELETE FROM employees where emp_no=?");
+                pstmt.setInt(1, sIdToDelete);
+                pstmt.executeUpdate();
+                System.out.println("직원 emp_no " + sIdToDelete + "삭제 완료.");
                 break;
             default:
                 System.out.println("nothing to do");
