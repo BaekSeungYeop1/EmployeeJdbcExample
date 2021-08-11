@@ -46,7 +46,7 @@ public class Employee {
         return this.gender;
     }
 
-    public String getHire_data() {
+    public String getHire_date() {
         return this.hire_date;
     }
 

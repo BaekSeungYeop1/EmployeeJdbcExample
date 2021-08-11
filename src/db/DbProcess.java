@@ -33,6 +33,29 @@ public class DbProcess {
                 showALLstudents(conn, pstmt, rs);
                 break;
             case Menu.INSERT:
+                Employee s = Employee.buildStudent();
+                // 새로운 map_no를 db에 insert 하기 위해 max emp_no+1을 가져온다
+                pstmt = conn.prepareStatement("select max(emp_no) + 1 from Employees");
+                rs = pstmt.executeQuery();
+                if (rs.next()){
+                    int maxEmp_no = rs.getInt(1);
+                    System.out.println("maxEmp_no = " + maxEmp_no);
+                    pstmt = conn.prepareStatement("insert into Employees values (?,?,?,?,?,?)");
+                    // "?"의 순서에 (1부터)에 따라 값을 셋팅
+                    pstmt.setInt(1, maxEmp_no);
+                    pstmt.setString(2, s.getBirth_date());
+                    pstmt.setString(3,s.getFirst_name());
+                    pstmt.setString(4, s.getLast_name());
+                    pstmt.setString(5,s.getGender());
+                    pstmt.setString(6,s.getHire_date());
+
+                    System.out.println("INSERT 완료");
+
+                    int updateRows = pstmt.executeUpdate();
+                    System.out.println("updateedRows: " + updateRows);
+                }else {
+                    throw new SQLException("Can't execute query select max(id) + 1 from student");
+                }
                 break;
             case Menu.UPDATE:
                 //직원 정보 수정
@@ -51,7 +74,7 @@ public class DbProcess {
                 pstmt.setString(2, updateStd.getFirst_name());
                 pstmt.setString(3, updateStd.getLast_name());
                 pstmt.setString(4, updateStd.getGender());
-                pstmt.setString(5, updateStd.getHire_data());
+                pstmt.setString(5, updateStd.getHire_date());
                 pstmt.setInt(6,sIDToUpdate);
                 pstmt.executeUpdate();
                 System.out.println("업데이트 완료.");
