@@ -5,4 +5,5 @@ public interface Menu {
     String INSERT = "2";
     String UPDATE = "3";
     String DELETE = "4";
+    String SELECT_GENDER = "5";
 }

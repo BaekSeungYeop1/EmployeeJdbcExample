@@ -80,7 +80,7 @@ public class InputUtil {
     // 이 프로그램이 지정한 inputString에 속하는거면 false, 아니면 "다시 입력해 주세요" 하고 true 처리
     private boolean checkUserInputScope(String inputString) {
         switch (inputString) {
-            case Menu.SELECT: case Menu.INSERT: case Menu.UPDATE: case Menu.DELETE: return false;
+            case Menu.SELECT: case Menu.INSERT: case Menu.UPDATE: case Menu.DELETE: case Menu.SELECT_GENDER: return false;
             default :
                 System.out.println("잘못 입력 하셨습니다. ");
                 System.out.println("주어진 메뉴중 하나를 골라 주세요");
@@ -95,5 +95,6 @@ public class InputUtil {
         System.out.println("2: 새로운 직원 추가");
         System.out.println("3: 직원번호 선택하여 수정");
         System.out.println("4: 직원 삭제");
+        System.out.println("5: 성별에 따른 검색");
     }
 }

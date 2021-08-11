@@ -6,6 +6,8 @@ import core.Menu;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class DbProcess {
     private static final String DB_URL = "jdbc:mariadb://localhost:3306/employees";
@@ -92,6 +94,44 @@ public class DbProcess {
                 pstmt.setInt(1, sIdToDelete);
                 pstmt.executeUpdate();
                 System.out.println("직원 emp_no " + sIdToDelete + "삭제 완료.");
+                break;
+            case Menu.SELECT_GENDER:
+                Scanner sc = new Scanner(System.in);
+                // 콘솔 출력 : 검색하려는 성별을 입력하세요
+                System.out.println("검색하려는 성별을 입력하세요 (F or M)");
+                //
+                String gender = sc.nextLine();
+                if (Objects.equals(gender, "F")) {
+                    List<Employee> fList = new ArrayList<>();
+                    pstmt = conn.prepareStatement("select * from Employees where gender = 'F' ");
+                    rs = pstmt.executeQuery();
+                    while (rs.next()){
+                        System.out.println(
+                                rs.getInt(1) + " | "
+                                        + rs.getString(2) + " | "
+                                        + rs.getString(3) + " | "
+                                        + rs.getString(4) + " | "
+                                        + rs.getString(5) + " | "
+                                        + rs.getDate(6));
+                        fList.add(new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+                    }
+
+                }
+                else if (Objects.equals(gender, "M"))  {
+                    List<Employee> mList = new ArrayList<>();
+                    pstmt = conn.prepareStatement("select * from Employees where gender = 'M' ");
+                    rs = pstmt.executeQuery();
+                    while (rs.next()) {
+                        System.out.println(
+                                rs.getInt(1) + " | "
+                                        + rs.getString(2) + " | "
+                                        + rs.getString(3) + " | "
+                                        + rs.getString(4) + " | "
+                                        + rs.getString(5) + " | "
+                                        + rs.getDate(6));
+                        mList.add(new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+                    }
+                }
                 break;
             default:
                 System.out.println("nothing to do");
